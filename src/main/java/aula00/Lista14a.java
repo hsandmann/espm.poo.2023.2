@@ -1,5 +1,5 @@
 package aula00;
-public class Lista14 {
+public class Lista14a {
     public static void main(String[] args) {
         int maior = Integer.MIN_VALUE;
         int a = 999, b = 999;
@@ -10,10 +10,9 @@ public class Lista14 {
     }
 
     public static boolean habemusPalindrome(int x) {
-        String palavra = String.valueOf(x);
-        for (int i = 0; i < palavra.length() / 2; i++)
-            if (palavra.charAt(i) != palavra.charAt(palavra.length() - i - 1))
-                return false;
-        return true;
+        int alvo = 0;
+        int aux = x;
+        for ( ; aux > 0; alvo *= 10, alvo += aux % 10, aux = (int) (aux / 10));
+        return alvo == x;
     }
 }
