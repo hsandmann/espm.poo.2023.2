@@ -1,6 +1,6 @@
 package aula00;
 public class Lista14a {
-    
+
     public static void main(String[] args) {
         int maior = Integer.MIN_VALUE;
         for (int a = 999 ; a > 99; a -= 1)
@@ -10,8 +10,7 @@ public class Lista14a {
     }
 
     public static boolean habemusPalindrome(int x) {
-        int alvo = 0;
-        int aux = x;
+        int alvo = 0, aux = x;
         for ( ; aux > 0; alvo *= 10, alvo += aux % 10, aux = (int) (aux / 10));
         return alvo == x;
     }
