@@ -11,7 +11,7 @@ public class Lista14a {
 
     public static boolean habemusPalindrome(int x) {
         int alvo = 0;
-        for (int aux = x ; aux > 0; alvo *= 10, alvo += aux % 10, aux = (int) (aux / 10));
+        for (int aux = x; aux > 0; alvo *= 10, alvo += aux % 10, aux = (int) (aux / 10));
         return alvo == x;
     }
 
