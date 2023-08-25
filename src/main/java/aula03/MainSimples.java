@@ -4,12 +4,12 @@ public class MainSimples {
 
     public static void main(String[] args) {
         
-        Banco banco = new Banco();
+        Banco banco = new Banco("ESPM");
         
-        Conta c1 = new Conta();
+        Conta c1 = new Conta(null);
         c1.sacar(10);
 
-        Conta c2 = new Conta();
+        Conta c2 = new Conta(null);
         c2.depositar(20);
 
         banco.contas.add(c1);
