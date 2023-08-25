@@ -7,6 +7,6 @@ public class Main {
 
         Conta c = new Conta(null);
 
-        c.sacar();
+        c.sacar(0);
     }
 }
