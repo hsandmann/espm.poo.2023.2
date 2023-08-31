@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public class Conta {
 
-    String id;
+    protected String id;
 
-    Cliente cliente;
-    String agencia;
-    String numero;
+    protected Cliente cliente;
+    protected String agencia;
+    protected String numero;
 
-    double saldo;
+    private double saldo;
 
     public Conta(Cliente cliente) {
         this.id = UUID.randomUUID().toString();
@@ -23,6 +23,15 @@ public class Conta {
 
     public void depositar(double valor) {
         saldo += valor;
+    }
+
+    @Override
+    public String toString() {
+        return id + " -> " + cliente;
+    }
+
+    public double getSaldo() {
+        return saldo;
     }
     
 }

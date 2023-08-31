@@ -22,8 +22,8 @@ public class MainSimples {
         // }
 
         for (Conta conta : banco.contas) { 
-            if (conta.saldo > 0)
-                System.out.println( conta.saldo );
+            if (conta.getSaldo() > 0)
+                System.out.println( conta.getSaldo() );
         }
 
         System.out.println(banco.contas);

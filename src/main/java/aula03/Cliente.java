@@ -2,14 +2,35 @@ package aula03;
 
 import java.util.UUID;
 
-public class Cliente {
+public abstract class Cliente {
 
-    String id;
-    String nome;
+    protected String id;
+    protected String nome;
+
+    public Cliente() {
+
+    }
 
     public Cliente(String nome) {
         this.id = UUID.randomUUID().toString();
         this.nome = nome;
+    }
+
+    @Override
+    public String toString() {
+        return id + ":" + nome;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
     }
     
 }

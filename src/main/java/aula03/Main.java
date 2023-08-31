@@ -18,11 +18,18 @@ public class Main {
             if ("0".equals(line) || "exit".equalsIgnoreCase(line)) break;
             else if ("?".equals(line)) menu(banco.nome);
             else if ("1".equals(line) || "add customer".equalsIgnoreCase(line)) {
-
+                
+                System.out.print("Tipo de pessoa [F|J]: ");
+                String tipoPessoa = terminal.nextLine();
+                Cliente cliente = null;
+                if ("F".equalsIgnoreCase(tipoPessoa)) {
+                    System.out.print("CPF: ");
+                    String cpf = terminal.nextLine();
+                    cliente = new PessoaFisica(cpf);
+                }
                 System.out.print("Nome: ");
                 String nome = terminal.nextLine();
 
-                Cliente cliente = new Cliente(nome);
                 banco.clientes.add(cliente);
                 currentCliente = cliente;
 

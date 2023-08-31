@@ -17,5 +17,5 @@ public class Banco {
         this.clientes = new ArrayList<>();
         this.nome = nome;
     }
-    
+
 }
