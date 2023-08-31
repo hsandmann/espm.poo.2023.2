@@ -8,11 +8,11 @@ public abstract class Cliente {
     protected String nome;
 
     public Cliente() {
-
+        this.id = UUID.randomUUID().toString();
     }
 
     public Cliente(String nome) {
-        this.id = UUID.randomUUID().toString();
+        this();
         this.nome = nome;
     }
 
