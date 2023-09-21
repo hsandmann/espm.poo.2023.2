@@ -21,7 +21,10 @@ public class Conta {
         saldo -= valor;
     }
 
-    public void depositar(double valor) {
+    public void depositar(double valor) throws BancoException {
+        if (valor <= 0) {
+            throw new BancoException(TipoBancoExceptionEnum.DEPOSITO_NEGATIVO_OU_ZERO);
+        }
         saldo += valor;
     }
 

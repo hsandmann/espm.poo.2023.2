@@ -13,7 +13,12 @@ public class Main {
         Conta currentConta = null;
 
         while (true) {
-            System.out.print(banco.nome + ":" + (currentCliente != null ? currentCliente.nome : "") + "> ");
+            System.out.print(
+                banco.nome + ":" +
+                (currentCliente != null ? currentCliente.nome : "") +
+                (currentConta != null ? "[" + currentConta.getSaldo() + "]" : "") +
+                "> "
+            );
             String line = terminal.nextLine().trim();
 
             try {
@@ -45,8 +50,20 @@ public class Main {
                             c instanceof PessoaJuridica p ? p.getCnpj() : null;
                         System.out.println(c + "> " + doc);
                     });
+                } else if ("10".equals(line) || "deposit".equalsIgnoreCase(line)) {
+                    System.out.print("valor: ");
+                    double valor = Double.parseDouble(terminal.nextLine());
+                    currentConta.depositar(valor);
+
+                } else if ("11".equals(line) || "withdraw".equalsIgnoreCase(line)) {                    System.out.println("valor: ");
+
+                    System.out.print("valor: ");
+                    double valor = Double.parseDouble(terminal.nextLine());
+                    currentConta.sacar(valor);
 
                 } else throw new Exception("comando invalido");
+            } catch (BancoException e) {
+                System.err.println("Falha de regra: " + e.getTipo() + "[" + e.getTipo().codigo + "]");
             } catch (Exception e) {
                 System.err.println("Erro: " + e.getMessage());
             }
