@@ -16,35 +16,40 @@ public class Main {
             System.out.print(banco.nome + ":" + (currentCliente != null ? currentCliente.nome : "") + "> ");
             String line = terminal.nextLine().trim();
 
-            // lista de comandos
-            if ("0".equals(line) || "exit".equalsIgnoreCase(line)) break;
-            else if ("?".equals(line)) menu(banco.nome);
-            else if ("1".equals(line) || "add customer".equalsIgnoreCase(line)) {
+            try {
+                // lista de comandos
+                if ("".equals(line.trim())) {}
+                else if ("0".equals(line) || "exit".equalsIgnoreCase(line)) break;
+                else if ("?".equals(line)) menu(banco.nome);
+                else if ("1".equals(line) || "add customer".equalsIgnoreCase(line)) {
 
-                currentCliente = addCustomer();
+                    currentCliente = addCustomer();
 
-            } else if ("2".equals(line) || "use customer".equalsIgnoreCase(line)) {
+                } else if ("2".equals(line) || "use customer".equalsIgnoreCase(line)) {
 
-            
+                
 
-            } else if ("3".equals(line) || "add account".equalsIgnoreCase(line)) {
+                } else if ("3".equals(line) || "add account".equalsIgnoreCase(line)) {
 
-                if (currentCliente != null) {
-                    currentConta = new Conta(currentCliente);
-                } else {
-                    System.out.println("selecione um cliente antes");
-                }
+                    if (currentCliente != null) {
+                        currentConta = new Conta(currentCliente);
+                    } else {
+                        System.out.println("selecione um cliente antes");
+                    }
 
-            } else if ("9".equals(line) || "list customers".equalsIgnoreCase(line)) {
+                } else if ("9".equals(line) || "list customers".equalsIgnoreCase(line)) {
 
-                banco.clientes.parallelStream().forEach(c -> {
-                    String doc =
-                        c instanceof PessoaFisica p ? p.getCpf() :
-                        c instanceof PessoaJuridica p ? p.getCnpj() : null;
-                    System.out.println(c + "> " + doc);
-                });
+                    banco.clientes.parallelStream().forEach(c -> {
+                        String doc =
+                            c instanceof PessoaFisica p ? p.getCpf() :
+                            c instanceof PessoaJuridica p ? p.getCnpj() : null;
+                        System.out.println(c + "> " + doc);
+                    });
 
-            } else System.out.println("comando invalido");
+                } else throw new Exception("comando invalido");
+            } catch (Exception e) {
+                System.err.println("Erro: " + e.getMessage());
+            }
         }
         System.out.println("bye bye");
 
