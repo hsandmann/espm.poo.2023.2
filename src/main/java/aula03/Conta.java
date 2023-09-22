@@ -2,7 +2,7 @@ package aula03;
 
 import java.util.UUID;
 
-public class Conta {
+public abstract class Conta {
 
     protected String id;
 
@@ -10,16 +10,15 @@ public class Conta {
     protected String agencia;
     protected String numero;
 
-    private double saldo;
+    protected double saldo;
 
     public Conta(Cliente cliente) {
         this.id = UUID.randomUUID().toString();
         this.cliente = cliente;
+        this.cliente.getContas().add(this);
     }
 
-    public void sacar(double valor) {
-        saldo -= valor;
-    }
+    public abstract void sacar(double valor) throws BancoException;
 
     public void depositar(double valor) throws BancoException {
         if (valor <= 0) {

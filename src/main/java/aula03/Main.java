@@ -14,9 +14,10 @@ public class Main {
 
         while (true) {
             System.out.print(
-                banco.nome + ":" +
-                (currentCliente != null ? currentCliente.nome : "") +
-                (currentConta != null ? "[" + currentConta.getSaldo() + "]" : "") +
+                banco.getNome() + ":" +
+                (currentCliente != null ? currentCliente.nome : "") + 
+                (currentConta != null ? (currentConta instanceof ContaCorrente ? "CC" : "CP") : "") +
+                (currentConta != null ? " [" + currentConta.getSaldo() + "]" : "") +
                 "> "
             );
             String line = terminal.nextLine().trim();
@@ -25,8 +26,10 @@ public class Main {
                 // lista de comandos
                 if ("".equals(line.trim())) {}
                 else if ("0".equals(line) || "exit".equalsIgnoreCase(line)) break;
-                else if ("?".equals(line)) menu(banco.nome);
-                else if ("1".equals(line) || "add customer".equalsIgnoreCase(line)) {
+                else if ("?".equals(line)) menu(banco.getNome());
+                else if ("666".equals(line) || "rendimento".equalsIgnoreCase(line)) {
+                    banco.calcularRendimentos();
+                } else if ("1".equals(line) || "add customer".equalsIgnoreCase(line)) {
 
                     currentCliente = addCustomer();
 
@@ -37,14 +40,18 @@ public class Main {
                 } else if ("3".equals(line) || "add account".equalsIgnoreCase(line)) {
 
                     if (currentCliente != null) {
-                        currentConta = new Conta(currentCliente);
+                        System.out.print("Tipo [P|C]? ");
+                        currentConta = terminal.nextLine().equalsIgnoreCase("P") ?
+                            new ContaPoupanca(currentCliente) :
+                            new ContaCorrente(currentCliente);
+                        banco.getContas().add(currentConta);
                     } else {
                         System.out.println("selecione um cliente antes");
                     }
 
                 } else if ("9".equals(line) || "list customers".equalsIgnoreCase(line)) {
 
-                    banco.clientes.parallelStream().forEach(c -> {
+                    banco.getClientes().parallelStream().forEach(c -> {
                         String doc =
                             c instanceof PessoaFisica p ? p.getCpf() :
                             c instanceof PessoaJuridica p ? p.getCnpj() : null;
@@ -54,13 +61,15 @@ public class Main {
                     System.out.print("valor: ");
                     double valor = Double.parseDouble(terminal.nextLine());
                     currentConta.depositar(valor);
-
-                } else if ("11".equals(line) || "withdraw".equalsIgnoreCase(line)) {                    System.out.println("valor: ");
-
+                } else if ("11".equals(line) || "withdraw".equalsIgnoreCase(line)) {
                     System.out.print("valor: ");
                     double valor = Double.parseDouble(terminal.nextLine());
                     currentConta.sacar(valor);
-
+                } else if ("20".equals(line) || "list accounts".equalsIgnoreCase(line)) {
+                    if (currentCliente == null) throw new RuntimeException("Selecione o cliente primeiro");
+                    currentCliente.getContas().forEach(c -> {
+                        System.out.println(c + " [" + (c instanceof ContaPoupanca ? "CP" : "CC") + "]: " + c.getSaldo());
+                    });
                 } else throw new Exception("comando invalido");
             } catch (BancoException e) {
                 System.err.println("Falha de regra: " + e.getTipo() + "[" + e.getTipo().codigo + "]");
@@ -99,11 +108,11 @@ public class Main {
             cliente instanceof PessoaFisica p ? p.getCpf() :
             cliente instanceof PessoaJuridica p ? p.getCnpj() : null;
 
-        for (Cliente c : banco.clientes) {
+        for (Cliente c : banco.getClientes()) {
             if (c.equals(cliente)) throw new RuntimeException("Cliente já existe: " + doc);
         }
-        banco.clientes.add(cliente);
-        System.out.println(banco.clientes);
+        banco.getClientes().add(cliente);
+        System.out.println(banco.getClientes());
         return cliente;
     }
     
